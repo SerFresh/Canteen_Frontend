@@ -10,31 +10,33 @@ export default function Profile() {
   return (
     <div className="bg-white min-h-screen p-4 sm:p-6">
       {/* Top Section */}
-      <div className="flex flex-col sm:flex-row justify-between items-start gap-4 sm:gap-0 mt-4">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">
-          <button onClick={() => window.history.back()} className="mt-1 sm:mt-0">
+      <div className="flex flex-row justify-between items-center mt-4 w-full">
+        <div className="flex items-center gap-3 max-w-[70%]">
+          <button onClick={() => window.history.back()} className="p-2 rounded-full hover:bg-gray-100 flex-shrink-0">
             <ChevronLeft className="w-6 h-6 text-gray-700" />
           </button>
-          <div className="mt-2 sm:mt-0">
-            <h1 className="text-2xl sm:text-3xl font-bold">Profile</h1>
-            <p className="text-gray-500 text-sm sm:text-base">Manage your account and change password</p>
+          <div>
+            <h1 className="text-2xl font-bold">Profile</h1>
+            <p className="text-gray-500 text-sm">Manage your account and change password</p>
           </div>
         </div>
-        <div className="flex flex-col sm:flex-col gap-2 sm:gap-3 items-start sm:items-end w-full sm:w-auto mt-4 sm:mt-0">
-          <button className="flex items-center gap-2 border border-gray-300 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100 w-full sm:w-auto justify-center sm:justify-start">
-            <BookOpenText className="w-5 h-5" /> User manual
+        <div className="flex gap-2 flex-shrink-0">
+          {/* User Manual */}
+          <button className="p-2 rounded-full border border-gray-300 hover:bg-gray-100">
+            <BookOpenText className="w-6 h-6 text-gray-700" />
           </button>
-          <Link
-            to="/editprofile"
-            className="flex items-center gap-2 bg-gradient-to-r from-orange-500 to-yellow-400 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 w-full sm:w-auto justify-center sm:justify-start"
-          >
-            <PencilLine className="w-5 h-5" /> Edit Profile
-          </Link>
-        </div>
-      </div>
 
+          {/* Edit Profile */}
+        <Link
+          to="/editprofile"
+          className="p-2 rounded-full bg-gradient-to-r from-orange-500 to-yellow-400 hover:opacity-90"
+        >
+          <PencilLine className="w-6 h-6 text-white" />
+        </Link>
+      </div>
+    </div>
       {/* Profile Card */}
-      <div className="flex justify-center mt-8 sm:mt-12">
+      <div className="flex flex-col items-center mt-20 sm:mt-10">
         <div className="bg-white border rounded-2xl shadow p-6 sm:p-8 w-full max-w-sm text-center">
           {/* Avatar */}
           <div className="flex justify-center mb-4">
