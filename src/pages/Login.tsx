@@ -18,9 +18,7 @@ export default function Login() {
         "https://canteen-backend-ten.vercel.app/api/auth/login",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
         }
       );
@@ -75,8 +73,16 @@ export default function Login() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-6 focus:outline-none focus:ring-2 focus:ring-[#FF8001]"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-[#FF8001]"
           />
+
+          {/* Forgot Password */}
+          <p
+            onClick={() => navigate("/forgot-password")}
+            className="text-right text-sm text-[#FF8001] hover:underline cursor-pointer mb-4"
+          >
+            ลืมรหัสผ่าน?
+          </p>
 
           {/* Button */}
           <button

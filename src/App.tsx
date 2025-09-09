@@ -6,6 +6,8 @@ import LoginSuccess from "./pages/LoginSuccess";
 import Profile from "./pages/Profile";
 import Editprofile from "./pages/Editprofile";
 import { UserProvider } from "./contexts/UserContext"; // เพิ่มตรงนี้
+import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Regis />} />
           <Route path="/login-success" element={<LoginSuccess />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/editprofile" element={<Editprofile />} />
