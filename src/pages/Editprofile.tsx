@@ -110,6 +110,17 @@ export default function EditProfile() {
           />
         </div>
 
+        <div className="flex flex-col">
+          <label className="mb-1 text-sm font-medium">Change Password</label>
+          <button
+            onClick={() => (window.location.href = "/change-password")}
+            className="bg-[#FF8001] hover:bg-[#FBC02D] text-white font-semibold px-4 py-2 rounded-lg mt-1"
+          >
+            เปลี่ยนรหัสผ่าน
+          </button>
+        </div>
+
+
         {/* Save Button */}
         <button
           onClick={handleSave}
