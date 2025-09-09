@@ -5,23 +5,23 @@ import Regis from "./pages/Signup";
 import LoginSuccess from "./pages/LoginSuccess";
 import Profile from "./pages/Profile";
 import Editprofile from "./pages/Editprofile";
-
+import { UserProvider } from "./contexts/UserContext"; // เพิ่มตรงนี้
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Regis />} />
-        <Route path="/login-success" element={<LoginSuccess />} />
+    <UserProvider> {/* ครอบ App ด้วย Provider */}
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Regis />} />
+          <Route path="/login-success" element={<LoginSuccess />} />
 
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/editprofile" element={<Editprofile />} />
-
-
-      </Routes>
-    </Router>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/editprofile" element={<Editprofile />} />
+        </Routes>
+      </Router>
+    </UserProvider>
   );
 }
 

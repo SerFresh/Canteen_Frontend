@@ -1,32 +1,9 @@
-import { useEffect, useState } from "react";
 import { ChevronLeft, BookOpenText, PencilLine, Mail, Lock, UserRound } from "lucide-react";
 import { Link } from "react-router-dom";
-
-interface User {
-  name: string;
-  nickname: string;
-  email: string;
-  imageProfile?: string;
-}
+import { useUser } from "../contexts/UserContext";
 
 export default function Profile() {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (!token) return;
-
-    fetch("https://canteen-backend-ten.vercel.app/api/user/profile", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(res => res.json())
-      .then(data => {
-        setUser(data); // data ควรมี { name, nickname, email, imageProfile }
-      })
-      .catch(err => console.error(err));
-  }, []);
+  const { user } = useUser();
 
   if (!user) return <p className="p-4">Loading...</p>;
 
