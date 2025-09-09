@@ -1,5 +1,7 @@
+// pages/Regis.tsx
 import { useState } from "react";
 import { ChevronLeft } from "lucide-react";
+import VerifyPopup from "../components/VerifyPopup";
 
 export default function Regis() {
   const [name, setName] = useState("");
@@ -9,6 +11,8 @@ export default function Regis() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [verifyToken, setVerifyToken] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,15 +36,22 @@ export default function Regis() {
       );
 
       const data = await res.json();
+      console.log("Register response:", data);
 
       if (!res.ok) {
         setError(data.message || "Something went wrong!");
       } else {
         setSuccess("Account created successfully!");
-        // ถ้าต้องการ redirect ไปหน้า login
-        setTimeout(() => (window.location.href = "/login"), 1500);
+
+        // ✅ ใช้ token จริงจาก backend หรือ fallback token
+        setVerifyToken(data.token || "dummy-token");
+        setShowPopup(true);
+
+        // ถ้าอยาก redirect ไป login หลัง 1.5 วิ
+        // setTimeout(() => (window.location.href = "/login"), 1500);
       }
     } catch (err) {
+      console.error(err);
       setError("Network error!");
     } finally {
       setLoading(false);
@@ -70,7 +81,6 @@ export default function Regis() {
               className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#FF8001]"
               required
             />
-
             <input
               type="email"
               placeholder="Email"
@@ -79,7 +89,6 @@ export default function Regis() {
               className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#FF8001]"
               required
             />
-
             <input
               type="password"
               placeholder="Password"
@@ -88,7 +97,6 @@ export default function Regis() {
               className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#FF8001]"
               required
             />
-
             <input
               type="password"
               placeholder="Confirm Password"
@@ -118,6 +126,11 @@ export default function Regis() {
           </p>
         </div>
       </div>
+
+      {/* ✅ แสดง popup */}
+      {showPopup && verifyToken && (
+        <VerifyPopup token={verifyToken} onClose={() => setShowPopup(false)} />
+      )}
     </div>
   );
 }

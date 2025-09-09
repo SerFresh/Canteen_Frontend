@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -22,6 +23,7 @@
     "@types/babel__template": "^7.4.4",
     "@types/babel__traverse": "^7.28.0",
     "@types/estree": "^1.0.8",
+    "@types/jwt-decode": "^3.1.0",
     "@types/prop-types": "^15.7.15",
     "@types/react": "^18.3.24",
     "@types/react-dom": "^18.3.7",
