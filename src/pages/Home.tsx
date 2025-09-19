@@ -1,36 +1,44 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { User } from "lucide-react";
-import Logo from "../assets/logo.png";
+
+interface Canteen {
+  _id: string;
+  name: string;
+  status?: "High" | "Medium" | "Low";
+  blockedTables?: number;
+  totalTables?: number;
+}
+
+interface UserData {
+  name?: string;
+  nickname?: string;
+}
 
 export default function Home() {
-  const [canteens, setCanteens] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<UserData | null>(null);
+  const [canteens, setCanteens] = useState<Canteen[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [lang, setLang] = useState<"th" | "en">("th");
 
-  // state สำหรับภาษา (เผื่อไว้เพราะคุณใช้ t.xxx อยู่)
-  const [lang, setLang] = useState("th");
+  const token = localStorage.getItem("authToken"); // token หลัง login
+  const isLoggedIn = !!token;
 
-  // ตัวอย่างข้อความ 2 ภาษา
-  const t = {
-    th: {
-      allCanteen: "โรงอาหารทั้งหมด",
-      welcome: "ยินดีต้อนรับ",
-      name: "ผู้ใช้",
-    },
-    en: {
-      allCanteen: "All Canteens",
-      welcome: "Welcome",
-      name: "User",
-    },
-  }[lang];
-
+  // Fetch โรงอาหาร
   useEffect(() => {
     const fetchCanteens = async () => {
       try {
         const res = await fetch(
-          "https://canteen-backend-ten.vercel.app/api/canteen/"
+          "https://canteen-backend-ten.vercel.app/api/canteen/",
+          {
+            headers: token
+              ? {
+                  Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+                }
+              : undefined,
+          }
         );
-        const data = await res.json();
+        const data: Canteen[] = await res.json();
         setCanteens(data);
       } catch (err) {
         console.error("Error fetching canteens:", err);
@@ -40,65 +48,46 @@ export default function Home() {
     };
 
     fetchCanteens();
-  }, []);
+    const interval = setInterval(fetchCanteens, 3000); // Polling ทุก 3 วินาที
+    return () => clearInterval(interval);
+  }, [token]);
 
-  // สมมติว่าเราเก็บ token ตอน login ลง localStorage
-  const isLoggedIn = !!localStorage.getItem("token");
+  // Fetch user profile
+  useEffect(() => {
+    if (!isLoggedIn || !token) return;
+
+    const fetchUser = async () => {
+      try {
+        const res = await fetch("https://canteen-backend-ten.vercel.app/api/user/profile", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (!res.ok) throw new Error("Failed to fetch user");
+        const data: UserData = await res.json();
+        setUser(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchUser();
+  }, [isLoggedIn, token]);
+
+  const t = {
+    th: { welcome: "ยินดีต้อนรับ", name: "ผู้ใช้" },
+    en: { welcome: "Welcome", name: "User" },
+  }[lang];
 
   return (
     <div className="font-thai bg-white min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="relative flex items-center justify-between p-4 border-b">
-        {/* Logo */}
-        <div>
-          <img src={Logo} alt="Logo" className="h-10 w-32 object-contain" />
-        </div>
 
-        {/* All Canteen */}
-        <h1 className="absolute left-1/2 transform -translate-x-1/2 text-orange-500 font-semibold text-lg">
-          {t.allCanteen}
-        </h1>
-
-        {/* Language + Profile */}
-        <div className="flex items-center gap-2">
-          {/* Language Switch */}
-          <div className="flex items-center border rounded-full overflow-hidden text-sm">
-            <button
-              onClick={() => setLang("th")}
-              className={`px-2 py-1 ${
-                lang === "th" ? "bg-orange-400 text-white" : "bg-gray-200"
-              }`}
-            >
-              TH
-            </button>
-            <button
-              onClick={() => setLang("en")}
-              className={`px-2 py-1 ${
-                lang === "en" ? "bg-orange-400 text-white" : "bg-gray-200"
-              }`}
-            >
-              EN
-            </button>
-          </div>
-
-          {/* Profile */}
-          <Link
-            to={isLoggedIn ? "/profile" : "/login"}
-            className="p-2 border rounded-full hover:bg-gray-100"
-          >
-            <User className="w-5 h-5" />
-          </Link>
-        </div>
-      </header>
-
-      {/* Welcome text */}
       <main className="flex flex-col items-center flex-1 mt-6">
         <p className="text-lg">
           {t.welcome}{" "}
-          <span className="text-orange-500 font-semibold">{t.name}</span>
+          <span className="text-orange-500 font-semibold">{user?.nickname ??user?.name ?? t.name}</span>
         </p>
 
-        {/* Canteen list */}
         <div className="w-full max-w-md mt-6 flex flex-col gap-4 px-6">
           {loading ? (
             <p className="text-gray-500 text-center">กำลังโหลด...</p>

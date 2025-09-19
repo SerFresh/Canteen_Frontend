@@ -1,9 +1,19 @@
 import { ChevronLeft, BookOpenText, PencilLine, Mail, Lock, UserRound } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
 
 export default function Profile() {
   const { user } = useUser();
+  const navigate = useNavigate();
+
+  // ตรวจสอบการล็อกอิน
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      navigate("/login", { replace: true });
+    }
+  }, [navigate]);
 
   if (!user) return <p className="p-4">Loading...</p>;
 

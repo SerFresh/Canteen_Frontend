@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
-import Logo from "../assets/logo.png"
+import Logo from "../assets/logo.png";
+import { useUser } from "../contexts/UserContext"; // ใช้ context
 
 export default function Login() {
   const navigate = useNavigate();
+  const { refreshUser } = useUser(); // ✅ เอามาใช้
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -35,8 +38,14 @@ export default function Login() {
       // ✅ เก็บ token
       localStorage.setItem("authToken", data.token);
 
-      // ✅ redirect หน้า profile (หรือหน้า home)
-      navigate("/profile", { replace: true });
+      // ✅ ดึงข้อมูล user มาเก็บใน context
+      await refreshUser();
+
+      // หรือถ้า API login ส่ง user มาด้วย:
+      // setUser(data.user);
+
+      // ✅ redirect ไปหน้า home
+      navigate("/", { replace: true });
     } catch (err) {
       console.error(err);
       setError("Something went wrong");
@@ -54,18 +63,17 @@ export default function Login() {
       </div>
 
       <div className="flex flex-col items-center min-h-screen px-8">
-        {/* Logo อยู่เหนือ card */}
+        {/* Logo */}
         <img
-          src={Logo} alt="Logo"
+          src={Logo}
+          alt="Logo"
           className="w-32 h-32 mb-6 object-contain mt-7"
         />
         <div className="bg-white w-full max-w-md rounded-2xl shadow-lg p-8 mt-5">
-
           <h1 className="text-2xl font-bold text-center mb-6">
             Smart Canteen Log In
           </h1>
 
-          {/* Email */}
           <input
             type="email"
             placeholder="Email"
@@ -74,7 +82,6 @@ export default function Login() {
             className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-4 focus:outline-none focus:ring-2 focus:ring-[#FF8001]"
           />
 
-          {/* Password */}
           <input
             type="password"
             placeholder="Password"
@@ -83,15 +90,13 @@ export default function Login() {
             className="w-full border border-gray-300 rounded-lg px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-[#FF8001]"
           />
 
-          {/* Forgot Password */}
           <p
             onClick={() => navigate("/forgot-password")}
             className="text-right text-sm text-[#FF8001] hover:underline cursor-pointer mb-4"
           >
-            ลืมรหัสผ่าน?
+            Forgot Password ?
           </p>
 
-          {/* Button */}
           <button
             onClick={handleLogin}
             disabled={loading}
@@ -102,7 +107,6 @@ export default function Login() {
 
           {error && <p className="text-red-500 mt-2 text-center">{error}</p>}
 
-          {/* Footer */}
           <p className="text-sm text-center text-gray-600 mt-4">
             Don’t have an account?{" "}
             <a href="/signup" className="text-[#FF8001] hover:underline">
@@ -114,3 +118,4 @@ export default function Login() {
     </div>
   );
 }
+

@@ -1,16 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+
+interface ResetPasswordResponse {
+  message: string;
+}
 
 export default function ResetPassword() {
   const navigate = useNavigate();
-  const [token, setToken] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const [token, setToken] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
-    // ดึง token จาก query string
     const params = new URLSearchParams(window.location.search);
     const t = params.get("token");
     if (!t) {
@@ -20,25 +23,27 @@ export default function ResetPassword() {
     }
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
 
     try {
-      const res = await fetch("https://canteen-backend-ten.vercel.app/api/auth/reset-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, password, confirmPassword }),
-      });
+      const res = await fetch(
+        "https://canteen-backend-ten.vercel.app/api/auth/reset-password",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token, password, confirmPassword }),
+        }
+      );
 
-      const data = await res.json();
+      const data: ResetPasswordResponse = await res.json();
 
       if (!res.ok) {
         setMessage(data.message || "เกิดข้อผิดพลาด");
       } else {
         setMessage(data.message);
-        // ✅ หลังตั้งรหัสผ่านใหม่เสร็จ → redirect ไป login
         setTimeout(() => navigate("/login"), 2000);
       }
     } catch (err) {
