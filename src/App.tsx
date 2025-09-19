@@ -9,6 +9,7 @@ import { UserProvider } from "./contexts/UserContext"; // เพิ่มตร�
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
 import CanteenJ from "./pages/CanteenJ";
+import CanteenDetail from "./pages/CanteenDetail";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/editprofile" element={<Editprofile />} />
           <Route path="/canteen/j" element={<CanteenJ />} />
+          <Route path="/canteen/:canteenId" element={<CanteenDetail />} />
         </Routes>
       </Router>
     </UserProvider>
