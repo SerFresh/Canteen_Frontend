@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 
 export default function ForgotPassword() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -36,7 +39,14 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gradient-to-r from-[#FF8001] to-[#FBC02D]">
+    <div className="font-thai flex h-screen bg-gradient-to-r from-[#FF8001] to-[#FBC02D]">
+      <div className="fixed">
+        <button onClick={() => navigate(-1)} className="">
+          <ChevronLeft className="w-10 h-10 ml-10 mt-10 text-icon" />
+        </button>
+      </div>
+      <div className="flex flex-col items-center justify-center w-screen px-8">
+
       <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md">
         <h1 className="text-2xl font-bold text-center mb-6">ลืมรหัสผ่าน</h1>
 
@@ -58,6 +68,7 @@ export default function ForgotPassword() {
             {loading ? "กำลังส่งลิงก์..." : "ส่งลิงก์รีเซ็ตรหัสผ่าน"}
           </button>
         </form>
+      </div>
       </div>
     </div>
   );

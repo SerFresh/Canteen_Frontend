@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ChevronLeft } from "lucide-react";
 
 export default function ChangePassword() {
+  const navigate = useNavigate();
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
@@ -53,7 +56,13 @@ export default function ChangePassword() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gradient-to-r from-[#FF8001] to-[#FBC02D] px-4">
+    <div className="flex h-screen bg-gradient-to-r from-[#FF8001] to-[#FBC02D] px-4">
+            <div className="fixed">
+        <button onClick={() => navigate(-1)} className="">
+          <ChevronLeft className="w-10 h-10 ml-10 mt-10 text-icon" />
+        </button>
+      </div>
+      <div className="flex flex-col items-center justify-center w-screen px-8">
       <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md">
         <h1 className="text-2xl font-bold text-center mb-6">เปลี่ยนรหัสผ่าน</h1>
 
@@ -93,6 +102,7 @@ export default function ChangePassword() {
             {loading ? "กำลังเปลี่ยนรหัสผ่าน..." : "เปลี่ยนรหัสผ่าน"}
           </button>
         </form>
+      </div>
       </div>
     </div>
   );

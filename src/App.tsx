@@ -8,7 +8,7 @@ import Editprofile from "./pages/Editprofile";
 import { UserProvider } from "./contexts/UserContext"; // เพิ่มตรงนี้
 import ResetPassword from "./pages/ResetPassword";
 import ForgotPassword from "./pages/ForgotPassword";
-import CanteenJ from "./pages/CanteenJ";
+import ChangePassword from "./pages/ChangePassword";
 import CanteenDetail from "./pages/CanteenDetail";
 
 function App() {
@@ -22,10 +22,10 @@ function App() {
           <Route path="/login-success" element={<LoginSuccess />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/change-password" element={<ChangePassword />} />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/editprofile" element={<Editprofile />} />
-          <Route path="/canteen/j" element={<CanteenJ />} />
           <Route path="/canteen/:canteenId" element={<CanteenDetail />} />
         </Routes>
       </Router>
