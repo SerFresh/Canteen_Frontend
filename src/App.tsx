@@ -43,7 +43,6 @@ export default function App() {
             <Route path="/" element={<Home lang={lang} />} />
             <Route path="/canteen/:canteenId" element={<CanteenDetail lang={lang} />} />
             <Route path="/tables/:tableId" element={<ReservationPage />} />
-            <Route path="/change-password" element={<ChangePassword />} />
           </Route>
 
           {/* กลุ่มที่ไม่มี Header */}
@@ -54,6 +53,7 @@ export default function App() {
           <Route path="/login-success" element={<LoginSuccess />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/change-password" element={<ChangePassword />} />
         </Routes>
       </Router>
     </UserProvider>
