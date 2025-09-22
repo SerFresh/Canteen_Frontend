@@ -14,21 +14,24 @@ interface UserData {
   nickname?: string;
 }
 
-export default function Home() {
+interface HomeProps {
+  lang: "th" | "en";
+}
+
+export default function Home({ lang }: HomeProps) {
   const [user, setUser] = useState<UserData | null>(null);
   const [canteens, setCanteens] = useState<Canteen[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [lang, setLang] = useState<"th" | "en">("th");
 
-  const token = localStorage.getItem("authToken"); // token หลัง login
+  const token = localStorage.getItem("authToken");
   const isLoggedIn = !!token;
 
-  // Fetch โรงอาหาร
+  // Fetch canteens
   useEffect(() => {
     const fetchCanteens = async () => {
       try {
         const res = await fetch(
-          "https://canteen-backend-ten.vercel.app/api/canteen/",
+          "https://canteen-backend-igyy.onrender.com/api/canteen/",
           {
             headers: token
               ? {
@@ -48,7 +51,7 @@ export default function Home() {
     };
 
     fetchCanteens();
-    const interval = setInterval(fetchCanteens, 3000); // Polling ทุก 3 วินาที
+    const interval = setInterval(fetchCanteens, 3000);
     return () => clearInterval(interval);
   }, [token]);
 
@@ -58,7 +61,7 @@ export default function Home() {
 
     const fetchUser = async () => {
       try {
-        const res = await fetch("https://canteen-backend-ten.vercel.app/api/user/profile", {
+        const res = await fetch("https://canteen-backend-igyy.onrender.com/api/user/profile", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -75,22 +78,23 @@ export default function Home() {
   }, [isLoggedIn, token]);
 
   const t = {
-    th: { welcome: "ยินดีต้อนรับ", name: "ผู้ใช้" },
-    en: { welcome: "Welcome", name: "User" },
+    th: { welcome: "ยินดีต้อนรับ", name: "ผู้ใช้", loading: "กำลังโหลด..." },
+    en: { welcome: "Welcome", name: "User", loading: "Loading..." },
   }[lang];
 
   return (
     <div className="font-thai bg-white min-h-screen flex flex-col">
-
       <main className="flex flex-col items-center flex-1 mt-6">
         <p className="text-lg">
           {t.welcome}{" "}
-          <span className="text-orange-500 font-semibold">{user?.nickname ??user?.name ?? t.name}</span>
+          <span className="text-orange-500 font-semibold">
+            {user?.nickname ?? user?.name ?? t.name}
+          </span>
         </p>
 
         <div className="w-full max-w-md mt-6 flex flex-col gap-4 px-6">
           {loading ? (
-            <p className="text-gray-500 text-center">กำลังโหลด...</p>
+            <p className="text-gray-500 text-center">{t.loading}</p>
           ) : (
             canteens.map((c) => (
               <Link

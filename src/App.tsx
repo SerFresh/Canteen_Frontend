@@ -13,6 +13,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ChangePassword from "./pages/ChangePassword";
 import Profile from "./pages/Profile";
 import Editprofile from "./pages/Editprofile";
+import ReservationPage from "./pages/Reservation";
 
 export default function App() {
   const [lang, setLang] = useState<"th" | "en">("th");
@@ -37,23 +38,22 @@ export default function App() {
     <UserProvider>
       <Router>
         <Routes>
-
           {/* กลุ่มที่มี Header */}
           <Route element={<Layout lang={lang} setLang={handleSetLang} isLoggedIn={isLoggedIn} />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/canteen/:canteenId" element={<CanteenDetail />} />
+            <Route path="/" element={<Home lang={lang} />} />
+            <Route path="/canteen/:canteenId" element={<CanteenDetail lang={lang} />} />
+            <Route path="/tables/:tableId" element={<ReservationPage />} />
+            <Route path="/change-password" element={<ChangePassword />} />
           </Route>
 
           {/* กลุ่มที่ไม่มี Header */}
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/editprofile" element={<Editprofile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Regis />} />
           <Route path="/login-success" element={<LoginSuccess />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/change-password" element={<ChangePassword />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/editprofile" element={<Editprofile />} />
-
         </Routes>
       </Router>
     </UserProvider>

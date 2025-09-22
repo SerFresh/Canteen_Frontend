@@ -30,7 +30,7 @@ export default function ChangePassword() {
 
     try {
       const res = await fetch(
-        "https://canteen-backend-ten.vercel.app/api/auth/change-password",
+        "https://canteen-backend-igyy.onrender.com/api/auth/change-password",
         {
           method: "POST",
           headers: {

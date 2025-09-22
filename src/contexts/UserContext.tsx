@@ -22,7 +22,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const token = localStorage.getItem("authToken");
     if (!token) return;
 
-    fetch("https://canteen-backend-ten.vercel.app/api/user/profile", {
+    fetch("https://canteen-backend-igyy.onrender.com/api/user/profile", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(res => res.json())

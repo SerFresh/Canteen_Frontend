@@ -19,7 +19,7 @@ export default function ForgotPassword() {
 
     try {
       const res = await fetch(
-        "https://canteen-backend-ten.vercel.app/api/auth/forgot-password",
+        "https://canteen-backend-igyy.onrender.com/api/auth/forgot-password",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

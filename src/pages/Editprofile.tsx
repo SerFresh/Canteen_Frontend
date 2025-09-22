@@ -29,7 +29,7 @@ export default function EditProfile() {
     if (form.imageFile) formData.append("image", form.imageFile);
 
     setSaving(true);
-    fetch("https://canteen-backend-ten.vercel.app/api/user/profile", {
+    fetch("https://canteen-backend-igyy.onrender.com/api/user/profile", {
       method: "PUT",
       headers: { Authorization: `Bearer ${token}` },
       body: formData,

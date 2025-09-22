@@ -19,7 +19,7 @@ export default function Checkin() {
       try {
         const token = localStorage.getItem("authToken"); // ดึง token
         const res = await fetch(
-          `https://canteen-backend-ten.vercel.app/api/reservation/${tableId}/activate`,
+          `https://canteen-backend-igyy.onrender.com/api/reservation/${tableId}/activate`,
           {
             method: "POST",
             headers: {

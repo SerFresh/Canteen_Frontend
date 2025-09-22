@@ -30,7 +30,7 @@ export default function ResetPassword() {
 
     try {
       const res = await fetch(
-        "https://canteen-backend-ten.vercel.app/api/auth/reset-password",
+        "https://canteen-backend-igyy.onrender.com/api/auth/reset-password",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
