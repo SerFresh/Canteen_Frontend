@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 interface ReservationResponse {
   message: string;
@@ -13,6 +13,7 @@ interface ReservationResponse {
 }
 
 export default function ReservationPage() {
+  const navigate = useNavigate();
   const { tableId } = useParams<{ tableId: string }>();
   const [duration, setDuration] = useState("10");
   const [loading, setLoading] = useState(false);
@@ -99,7 +100,7 @@ export default function ReservationPage() {
 };
 
   const handleScanQR = () => {
-    alert("เปิดกล้องสแกน QR Code (ใส่ QR scanner component ที่นี่)");
+    navigate("/QRScan");
   };
 
   return (

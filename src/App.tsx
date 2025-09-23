@@ -15,6 +15,7 @@ import ChangePassword from "./pages/ChangePassword";
 import Profile from "./pages/Profile";
 import Editprofile from "./pages/Editprofile";
 import ReservationPage from "./pages/Reservation";
+import ActivatePage from "./pages/Activate";
 
 export default function App() {
   const [lang, setLang] = useState<"th" | "en">("th");
@@ -56,6 +57,7 @@ export default function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/QRscan" element={<QrScanner />} />
+          <Route path="/activate/:tableId" element={<ActivatePage />} />
         </Routes>
       </Router>
     </UserProvider>
