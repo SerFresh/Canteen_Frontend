@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { UserProvider } from "./contexts/UserContext"; 
+import QrScanner from "./pages/QrScanner";
 
 import Layout from "./Layout";
 import Home from "./pages/Home";
@@ -54,6 +55,7 @@ export default function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/change-password" element={<ChangePassword />} />
+          <Route path="/QRscan" element={<QrScanner />} />
         </Routes>
       </Router>
     </UserProvider>
