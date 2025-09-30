@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import Editprofile from "./pages/Editprofile";
 import ReservationPage from "./pages/Reservation";
 import ActivatePage from "./pages/Activate";
+import MyReservations from "./pages/MyReservation";
 
 export default function App() {
   const [lang, setLang] = useState<"th" | "en">("th");
@@ -58,6 +59,7 @@ export default function App() {
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/QRscan" element={<QrScanner />} />
           <Route path="/activate/:tableId" element={<ActivatePage />} />
+          <Route path="/my-reservations" element={<MyReservations />} />
         </Routes>
       </Router>
     </UserProvider>

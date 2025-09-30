@@ -14,7 +14,7 @@ export default function LoginSuccess() {
 
       // 🔹 ให้ redirect หลังจากเก็บ token เสร็จ
       setTimeout(() => {
-        navigate("/profile", { replace: true });
+        navigate("/", { replace: true });
       }, 100); // 100ms เผื่อ async rendering
     } else {
       navigate("/login", { replace: true });

@@ -22,7 +22,10 @@ export default function Profile() {
       {/* Top Section */}
       <div className="flex flex-row justify-between items-center mt-4 w-full">
         <div className="flex items-center gap-3 max-w-[70%]">
-          <button onClick={() => window.history.back()} className="p-2 rounded-full hover:bg-gray-100 flex-shrink-0">
+          <button
+            onClick={() => navigate("/")}
+            className="p-2 rounded-full hover:bg-gray-100 flex-shrink-0"
+          >
             <ChevronLeft className="w-6 h-6 text-gray-700" />
           </button>
           <div>
